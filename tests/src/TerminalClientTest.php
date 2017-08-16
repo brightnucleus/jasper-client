@@ -49,20 +49,20 @@ class TerminalClientTest extends TestCase
      *
      * @since 0.1.0
      */
-    /*    public function testGetModifiedTerminals()
-        {
-            $client = new TerminalClient();
-            $result = $client->getModifiedTerminals(new GetModifiedTerminalsRequest(CISCO_JASPER_TEST_ACCOUNT_ID));
-            $this->assertInstanceOf(GetModifiedTerminalsResponse::class, $result);
-            $this->assertNotEquals(new \stdClass(), $result->getIccids());
-        }*/
+    public function testGetModifiedTerminals()
+    {
+        $client = new TerminalClient();
+        $result = $client->getModifiedTerminals(new GetModifiedTerminalsRequest(CISCO_JASPER_TEST_ACCOUNT_ID));
+        $this->assertInstanceOf(GetModifiedTerminalsResponse::class, $result);
+        $this->assertNotEquals(new \stdClass(), $result->getIccids());
+    }
 
     /**
      * Test whether a call to `GetTerminalDetails` returns the correct message.
      *
      * @vcr   get-terminal-details.yml
      *
-     * @since 0.1.0
+     * @since 0.1.1
      */
     public function testGetTerminalDetails()
     {

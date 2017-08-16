@@ -3,12 +3,13 @@
 namespace BrightNucleus\JasperClient\SoapTypes\TerminalClient;
 
 use BrightNucleus\JasperClient\SoapTypes\JasperResponse;
+use BrightNucleus\JasperClient\SoapTypes\Other\Iccids;
 
 class GetModifiedTerminalsResponse extends JasperResponse
 {
 
     /**
-     * @var iccids
+     * @var Iccids
      */
     private $iccids = null;
 
@@ -23,7 +24,7 @@ class GetModifiedTerminalsResponse extends JasperResponse
     private $any = null;
 
     /**
-     * @return iccids
+     * @return Iccids
      */
     public function getIccids()
     {
