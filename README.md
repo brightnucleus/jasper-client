@@ -57,6 +57,7 @@ export CISCO_JASPER_API_ENVIRONMENT=sandbox
 export CISCO_JASPER_API_LICENSE_KEY=<your API license key>
 export CISCO_JASPER_USERNAME=<login username>
 export CISCO_JASPER_PASSWORD=<login password>
+export CISCO_JASPER_TEST_ACCOUNT_ID=<test account ID>
 ```
 
 Then you can run all the tests with the following command:

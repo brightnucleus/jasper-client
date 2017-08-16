@@ -45,6 +45,13 @@ if (! defined(JasperClient::CONSTANT_PASSWORD)) {
     );
 }
 
+if (! defined('CISCO_JASPER_TEST_ACCOUNT_ID')) {
+    define(
+        'CISCO_JASPER_TEST_ACCOUNT_ID',
+        getenv('CISCO_JASPER_TEST_ACCOUNT_ID')
+    );
+}
+
 // Load Composer autoloader.
 $autoloader = dirname(__DIR__) . '/vendor/autoload.php';
 if (is_readable($autoloader)) {

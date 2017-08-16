@@ -3,12 +3,13 @@
 namespace BrightNucleus\JasperClient\SoapTypes\TerminalClient;
 
 use BrightNucleus\JasperClient\SoapTypes\JasperResponse;
+use BrightNucleus\JasperClient\SoapTypes\Other\Terminals;
 
 class GetTerminalDetailsResponse extends JasperResponse
 {
 
     /**
-     * @var terminals
+     * @var Terminals
      */
     private $terminals = null;
 
@@ -18,7 +19,7 @@ class GetTerminalDetailsResponse extends JasperResponse
     private $any = null;
 
     /**
-     * @return terminals
+     * @return Terminals
      */
     public function getTerminals()
     {

@@ -13,7 +13,11 @@
 
 namespace BrightNucleus\JasperClient\Tests;
 
+use BrightNucleus\JasperClient\SoapTypes\Other\Iccids;
 use BrightNucleus\JasperClient\SoapTypes\TerminalClient\GetModifiedTerminalsRequest;
+use BrightNucleus\JasperClient\SoapTypes\TerminalClient\GetModifiedTerminalsResponse;
+use BrightNucleus\JasperClient\SoapTypes\TerminalClient\GetTerminalDetailsRequest;
+use BrightNucleus\JasperClient\SoapTypes\TerminalClient\GetTerminalDetailsResponse;
 use BrightNucleus\JasperClient\TerminalClient;
 use PHPUnit\Framework\TestCase;
 
@@ -45,10 +49,29 @@ class TerminalClientTest extends TestCase
      *
      * @since 0.1.0
      */
-    public function testGetModifiedTerminals()
+    /*    public function testGetModifiedTerminals()
+        {
+            $client = new TerminalClient();
+            $result = $client->getModifiedTerminals(new GetModifiedTerminalsRequest(CISCO_JASPER_TEST_ACCOUNT_ID));
+            $this->assertInstanceOf(GetModifiedTerminalsResponse::class, $result);
+            $this->assertNotEquals(new \stdClass(), $result->getIccids());
+        }*/
+
+    /**
+     * Test whether a call to `GetTerminalDetails` returns the correct message.
+     *
+     * @vcr   get-terminal-details.yml
+     *
+     * @since 0.1.0
+     */
+    public function testGetTerminalDetails()
     {
         $client = new TerminalClient();
-        $result = $client->getModifiedTerminals(new GetModifiedTerminalsRequest(1));
-        $this->assertEquals(new \stdClass(), $result->getIccids());
+        $iccids = Iccids::from('8965011603270414802');
+        $result = $client->getTerminalDetails(new GetTerminalDetailsRequest($iccids));
+        $this->assertInstanceOf(GetTerminalDetailsResponse::class, $result);
+        $terminals = $result->getTerminals()->getTerminal();
+        $this->assertCount(1, $terminals);
+        $this->assertEquals('8965011603270414802', $terminals[0]->getIccid());
     }
 }

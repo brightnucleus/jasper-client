@@ -93,15 +93,15 @@ abstract class AbstractClient
      */
     protected function initializeClient()
     {
-        $environment        = $this->getEnvironment();
-        $wsdl               = $this->getWsdlUri($environment);
-        $options            = $this->getSoapOptions($environment);
-        $classMapCollection = $this->getClassMapCollection($environment);
-        $clientFactory      = new ClientFactory(JasperClient::class);
+        $environment   = $this->getEnvironment();
+        $wsdl          = $this->getWsdlUri($environment);
+        $options       = $this->getSoapOptions($environment);
+        $classMap      = $this->getClassMap($environment);
+        $clientFactory = new ClientFactory(JasperClient::class);
 
         $clientBuilder = new ClientBuilder($clientFactory, $wsdl, $options);
         $clientBuilder->withLogger($this->logger);
-        foreach ($classMapCollection->toSoapClassMap() as $wsdlType => $phpClassName) {
+        foreach ($classMap as $wsdlType => $phpClassName) {
             $clientBuilder->addClassMap(new ClassMap($wsdlType, $phpClassName));
         }
         $this->client = $clientBuilder->build();
@@ -169,18 +169,20 @@ abstract class AbstractClient
     }
 
     /**
-     * Get the class map collection for a given environment.
+     * Get the class map array for a given environment.
      *
      * @since 0.1.0
      *
      * @param string $environment Environment to get the class map for.
      *
-     * @return ClassMapCollection Collection of class mappings.
+     * @return array Array of class mappings.
      */
-    protected function getClassMapCollection(string $environment): ClassMapCollection
+    protected function getClassMap(string $environment): array
     {
-        $wsdl = static::WSDL_IDENTIFIER;
-        return include dirname(__DIR__) . "/config/classmaps/{$wsdl}-classmap.php";
+        $wsdl          = static::WSDL_IDENTIFIER;
+        $wsdlClassMap  = include dirname(__DIR__) . "/config/classmaps/{$wsdl}-classmap.php";
+        $otherClassMap = include dirname(__DIR__) . "/config/classmaps/other-classmap.php";
+        return array_merge($wsdlClassMap->toSoapClassMap(), $otherClassMap->toSoapClassMap());
     }
 
     /**

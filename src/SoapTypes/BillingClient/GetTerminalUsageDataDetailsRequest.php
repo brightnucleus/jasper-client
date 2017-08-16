@@ -13,7 +13,7 @@ class GetTerminalUsageDataDetailsRequest extends JasperRequest
     private $iccid = null;
 
     /**
-     * @var \DateTime
+     * @var \DateTimeInterface
      */
     private $cycleStartDate = null;
 
@@ -21,6 +21,22 @@ class GetTerminalUsageDataDetailsRequest extends JasperRequest
      * @var int
      */
     private $pageNumber = null;
+
+    /**
+     * Instantiate a GetTerminalUsageDataDetailsRequest object.
+     *
+     * @since 0.1.1
+     *
+     * @param string             $iccid
+     * @param \DateTimeInterface $cycleStartDate
+     * @param int                $pageNumber
+     */
+    public function __construct(string $iccid, \DateTimeInterface $cycleStartDate = null, $pageNumber = 1)
+    {
+        $this->iccid          = $iccid;
+        $this->cycleStartDate = $cycleStartDate ?: new \DateTimeImmutable('first day of this month');
+        $this->pageNumber     = $pageNumber;
+    }
 
     /**
      * @return string
@@ -31,7 +47,7 @@ class GetTerminalUsageDataDetailsRequest extends JasperRequest
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeInterface
      */
     public function getCycleStartDate()
     {
