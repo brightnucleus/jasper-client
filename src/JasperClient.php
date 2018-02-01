@@ -96,7 +96,7 @@ class JasperClient extends Client
             $response = parent::call($method, $request);
         } catch (SoapException $exception) {
             $debugException = new DebuggingSoapException(
-                $exception->getMessage(),
+                DebuggingSoapException::interpretMessage($exception->getMessage()),
                 $exception->getCode(),
                 $exception->getPrevious()
             );

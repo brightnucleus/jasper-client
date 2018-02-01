@@ -57,4 +57,23 @@ class DebuggingSoapException extends SoapException
     {
         return $this->debugOutput;
     }
+
+    /**
+     * Try to interpret the message in case it is a JASPER error code.
+     *
+     * @since 0.1.3
+     *
+     * @param string $message Message to interpret.
+     *
+     * @return string Interpreted message.
+     */
+    public static function interpretMessage($message)
+    {
+        if (array_key_exists($message, ErrorMessage::CODE)) {
+            return sprintf('[%s] %s', $message,
+                ErrorMessage::CODE[$message]);
+        }
+
+        return $message;
+    }
 }
